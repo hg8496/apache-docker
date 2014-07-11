@@ -5,6 +5,7 @@ MAINTAINER hg8496@cstolz.de
 RUN apt-get update && apt-get install apache2 libapache2-mod-php5 openssh-server supervisor -y && apt-get clean
 RUN mkdir -p /var/run/sshd
 RUN echo 'root:toor' |chpasswd
+RUN sed -i "s/PermitRootLogin without-password/PermitRootLogin yes/" /etc/ssh/sshd_config
 RUN mkdir -p /var/log/supervisor
 
 RUN a2enmod php5
