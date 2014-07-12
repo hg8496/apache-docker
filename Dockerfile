@@ -1,16 +1,19 @@
-FROM ubuntu:14.04
+FROM phusion/baseimage:0.9.11
 
 MAINTAINER hg8496@cstolz.de
 
-RUN apt-get update && apt-get install apache2 libapache2-mod-php5 openssh-server supervisor -y && apt-get clean
-RUN mkdir -p /var/run/sshd
-RUN echo 'root:toor' |chpasswd
-RUN sed -i "s/PermitRootLogin without-password/PermitRootLogin yes/" /etc/ssh/sshd_config
-RUN mkdir -p /var/log/supervisor
+ENV HOME /root
 
-RUN a2enmod php5
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Regenerate SSH host keys. baseimage-docker does not contain any, so you
+# have to do that yourself. You may also comment out this instruction; the
+# init system will auto-generate one during boot.
+RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
+
+RUN apt-get update && apt-get install apache2 libapache2-mod-php5 -y 
+RUN mkdir /etc/service/apache
+ADD apache.sh /etc/service/apache/run
 EXPOSE 80 22
-
-CMD ["/usr/bin/supervisord"]
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
