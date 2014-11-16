@@ -1,1 +1,1 @@
-Sets the root passwort to toor. Do not forget to change on your system.
+A simple apache image with php enabled. Based on https://github.com/phusion/baseimage-docker
