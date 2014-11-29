@@ -20,4 +20,3 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ADD apache.sh /etc/service/apache/run
 EXPOSE 80 22
-RUN 
