@@ -15,7 +15,7 @@ CMD ["/sbin/my_init"]
 RUN apt-get update \
     && apt-get dist-upgrade -y \
     && apt-get install apache2 libapache2-mod-php5 -y \
-    && sed -i 's/^ErrorLog.*$/ErrorLog "|cat"/g' etc/apache2/apache2.conf
+    && sed -i 's/^ErrorLog.*$/ErrorLog "|\/bin\/cat"/g' etc/apache2/apache2.conf
     && mkdir /etc/service/apache \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
