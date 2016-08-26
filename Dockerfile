@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER hg8496@cstolz.de
 
@@ -7,7 +7,7 @@ ENV HOME /root
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get dist-upgrade -y \
-    && apt-get install apache2 libapache2-mod-php5 -y \
+    && apt-get install apache2 libapache2-mod-php7.0 -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ADD apache.sh /apache.sh
